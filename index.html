@@ -4,190 +4,450 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typemaster Pre-launch</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <script>
-        // Custom Tailwind configuration
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'tm-orange': '#F16718',
-                        'tm-orange-light': '#FF9B62',
-                        'tm-blue-dark': '#162542', // For titles
-                        'tm-grey': '#7B8BAD',       // For paragraph text
-                        'tm-grey-light': '#E8EFF2', // For background shapes/elements
-                        'tm-grey-medium': '#A0AEC0', // For lighter text like footer
-                        'tm-white': '#FFFFFF',
-                    },
-                    fontFamily: {
-                        'barlow': ['Barlow', 'sans-serif'],
-                    },
-                    fontWeight: {
-                        'normal': 400,
-                        'medium': 500,
-                        'bold': 700,
-                        'black': 900, // Extra bold for main titles
-                    },
-                    letterSpacing: {
-                        widest: '.25em' // For PRE-ORDER button
-                    }
-                }
+    <style>
+        :root {
+            --tm-orange: #F16718;
+            --tm-orange-light: #FF9B62;
+            --tm-blue-dark: #162542;
+            --tm-grey: #7B8BAD;
+            --tm-grey-light: #E8EFF2;
+            --tm-grey-medium: #A0AEC0;
+            --tm-white: #FFFFFF;
+            --font-barlow: 'Barlow', sans-serif;
+        }
+        body {
+            font-family: var(--font-barlow);
+            color: var(--tm-grey);
+            background-color: var(--tm-white);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 96rem;
+            margin: 0 auto;
+            padding-left: 1.5rem;
+            padding-right: 2rem;
+        }
+        header {
+            padding: 2rem 0;
+        }
+        @media (min-width: 768px) {
+            header {
+                padding: 3rem 0;
             }
         }
-    </script>
-    <style>
-        /* Apply Barlow font to the body */
-        body {
-            font-family: 'Barlow', sans-serif;
-            background-color: #FFFFFF; /* Main page background */
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        /* Helper for z-index on patterned backgrounds */
-        .pattern-bg::before {
+        .logo-box {
+            background: var(--tm-blue-dark);
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+        }
+        .logo-box span {
+            color: #fff;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        .btn-preorder {
+            background: var(--tm-grey-light);
+            color: var(--tm-blue-dark);
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.1em;
+            transition: background 0.3s, color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-preorder:hover {
+            background: var(--tm-blue-dark);
+            color: #fff;
+        }
+        .pattern-bg {
+            position: relative;
+            overflow: hidden;
+        }
+        .pattern-bg-right::before,
+        .pattern-bg-left::before {
             content: "";
             position: absolute;
             top: 0;
             height: 100%;
-            background-color: #E8EFF2; /* tm-grey-light */
+            background-color: var(--tm-grey-light);
             z-index: -1;
-            display: none; /* Hidden by default, shown on md+ */
+            display: none;
         }
-        @media (min-width: 768px) { /* md breakpoint */
-            .pattern-bg::before {
-                display: block;
-            }
+        @media (min-width: 768px) {
             .pattern-bg-right::before {
+                display: block;
                 right: 0;
                 width: 50%;
-                border-top-left-radius: 1.5rem; /* 24px */
-                border-bottom-left-radius: 1.5rem; /* 24px */
+                border-top-left-radius: 1.5rem;
+                border-bottom-left-radius: 1.5rem;
             }
             .pattern-bg-left::before {
+                display: block;
                 left: 0;
-                width: 40%; /* Adjusted width for this specific layout */
-                border-top-right-radius: 1.5rem; /* 24px */
-                border-bottom-right-radius: 1.5rem; /* 24px */
+                width: 40%;
+                border-top-right-radius: 1.5rem;
+                border-bottom-right-radius: 1.5rem;
             }
+        }
+        .main-section {
+            padding: 2.5rem 0;
+        }
+        @media (min-width: 768px) {
+            .main-section {
+                padding: 5rem 0;
+            }
+        }
+        .main-grid {
+            display: grid;
+            gap: 3rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .main-title {
+            color: var(--tm-blue-dark);
+            font-weight: 900;
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin: 0 0 1.5rem 0;
+        }
+        @media (min-width: 640px) {
+            .main-title {
+                font-size: 3rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .main-title {
+                font-size: 3.75rem;
+            }
+        }
+        .main-desc {
+            color: var(--tm-grey);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        .main-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) {
+            .main-actions {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 1.5rem;
+            }
+        }
+        .main-img {
+            border-radius: 1rem;
+            box-shadow: 0 10px 40px 0 rgba(22,37,66,0.15);
+            object-fit: cover;
+            width: 100%;
+            max-width: 32rem;
+        }
+        .section {
+            padding: 4rem 0;
+        }
+        @media (min-width: 768px) {
+            .section {
+                padding: 6rem 0;
+            }
+        }
+        @media (min-width: 1024px) {
+            .section {
+                padding: 8rem 0;
+            }
+        }
+        .section-grid {
+            display: grid;
+            gap: 2rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .section-grid {
+                grid-template-columns: 5fr 7fr;
+                gap: 4rem;
+            }
+        }
+        .section-img {
+            border-radius: 1rem;
+            box-shadow: 0 10px 40px 0 rgba(22,37,66,0.15);
+            object-fit: cover;
+            width: 100%;
+            max-width: 28rem;
+        }
+        .section-title {
+            color: var(--tm-blue-dark);
+            font-weight: 900;
+            font-size: 2rem;
+            line-height: 1.1;
+            margin: 0 0 1rem 0;
+        }
+        @media (min-width: 640px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+        .section-desc {
+            color: var(--tm-grey);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .features-header {
+            display: grid;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        @media (min-width: 768px) {
+            .features-header {
+                grid-template-columns: 1fr 2fr;
+                gap: 2rem;
+            }
+        }
+        .features-title {
+            color: var(--tm-blue-dark);
+            font-weight: 900;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        @media (min-width: 640px) {
+            .features-title {
+                font-size: 2.5rem;
+            }
+        }
+        .features-desc {
+            color: var(--tm-grey);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .features-grid {
+            display: grid;
+            gap: 2rem;
+        }
+        @media (min-width: 640px) {
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (min-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        .feature {
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .feature {
+                text-align: left;
+            }
+        }
+        .feature-icon {
+            background: var(--tm-orange);
+            width: 4rem;
+            height: 4rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+        }
+        @media (min-width: 768px) {
+            .feature-icon {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+        .feature-icon svg {
+            width: 2rem;
+            height: 2rem;
+            color: #fff;
+        }
+        .feature-title {
+            color: var(--tm-blue-dark);
+            font-weight: 900;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        @media (min-width: 640px) {
+            .feature-title {
+                font-size: 1.5rem;
+            }
+        }
+        .feature-desc {
+            color: var(--tm-grey);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        footer {
+            padding: 2.5rem 0;
+            background: none;
+        }
+        @media (min-width: 768px) {
+            footer {
+                padding: 3rem 0;
+            }
+        }
+        .footer-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (min-width: 768px) {
+            .footer-container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+        .footer-text {
+            color: var(--tm-grey-medium);
+            font-weight: 500;
+        }
+        .footer-text .font-bold {
+            font-weight: bold;
         }
     </style>
 </head>
-<body class="font-barlow text-tm-grey antialiased">
+<body>
 
-    <header class="py-8 md:py-12">
-        <div class="container max-w-6xl mx-auto px-6 lg:px-8 flex justify-between items-center">
-            <div class="bg-tm-blue-dark w-10 h-10 flex items-center justify-center rounded-md">
-                <span class="text-white font-bold text-2xl">TM</span>
+    <header>
+        <div class="container header-flex">
+            <div class="logo-box">
+                <span>TM</span>
             </div>
-            <a href="#" class="bg-tm-grey-light hover:bg-tm-blue-dark text-tm-blue-dark hover:text-white font-bold py-3 px-6 rounded-lg uppercase text-sm tracking-wider transition-colors duration-300">
+            <a href="#" class="btn-preorder">
                 Pre-order now
             </a>
         </div>
     </header>
 
     <main>
-        <section class="relative overflow-hidden pattern-bg pattern-bg-right py-10 md:py-20">
-            <div class="container max-w-6xl mx-auto px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6 md:space-y-8 text-center md:text-left">
-                    <h1 class="text-tm-blue-dark font-black text-4xl sm:text-5xl lg:text-6xl leading-tight">
+        <section class="pattern-bg pattern-bg-right main-section">
+            <div class="container main-grid">
+                <div>
+                    <h1 class="main-title">
                         Typemaster Keyboard
                     </h1>
-                    <p class="text-tm-grey text-base sm:text-lg leading-relaxed">
+                    <p class="main-desc">
                         Improve your productivity and gaming without breaking the bank. Upgrade to a high quality mechanical keyboard today.
                     </p>
-                    <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-6">
-                        <a href="#" class="w-full sm:w-auto bg-tm-orange hover:bg-tm-orange-light text-white font-bold py-4 px-8 rounded-lg uppercase text-sm tracking-widest transition-colors duration-300 text-center">
+                    <div class="main-actions">
+                        <a href="#" class="btn-preorder" style="background: var(--tm-orange); color: #fff;">
                             Pre-order now
                         </a>
-                        <span class="text-tm-grey font-medium">Release on 5/27</span>
+                        <span style="color: var(--tm-grey); font-weight: 500;">Release on 5/27</span>
                     </div>
                 </div>
-                <div class="relative flex justify-center md:justify-end">
+                <div style="display: flex; justify-content: center;">
                     <img src="https://placehold.co/540x480/F16718/FFFFFF?text=Keyboard" 
                          alt="Typemaster Keyboard" 
-                         class="rounded-xl shadow-2xl object-cover w-full max-w-lg">
+                         class="main-img">
                 </div>
             </div>
         </section>
 
-        <section class="relative overflow-hidden pattern-bg pattern-bg-left py-16 md:py-24 lg:py-32">
-            <div class="container max-w-6xl mx-auto px-6 lg:px-8 grid md:grid-cols-12 gap-8 md:gap-16 items-center">
-                <div class="md:col-span-5 relative flex justify-center md:justify-start">
+        <section class="pattern-bg pattern-bg-left section">
+            <div class="container section-grid">
+                <div>
                      <img src="https://placehold.co/445x480/3B82F6/FFFFFF?text=Phone+Keyboard" 
                          alt="Mechanical wireless keyboard with a phone" 
-                         class="rounded-xl shadow-2xl object-cover w-full max-w-md">
+                         class="section-img">
                 </div>
-                <div class="md:col-span-7 space-y-4 md:space-y-6 text-center md:text-left md:pl-10 lg:pl-20">
-                    <h2 class="text-tm-blue-dark font-black text-3xl sm:text-4xl leading-tight">
+                <div>
+                    <h2 class="section-title">
                         Mechanical wireless Keyboard
                     </h2>
-                    <p class="text-tm-grey text-base sm:text-lg leading-relaxed">
+                    <p class="section-desc">
                         The Typemaster keyboard boasts high-quality mechanical switches built for longevity and satisfying tactile feedback. Enjoy the freedom of a wireless connection and a clutter-free workspace.
                     </p>
                 </div>
             </div>
         </section>
 
-        <section class="py-16 md:py-24 lg:py-32">
-            <div class="container max-w-6xl mx-auto px-6 lg:px-8">
-                <div class="text-center md:text-left max-w-xl md:max-w-none grid md:grid-cols-3 items-center mb-12 md:mb-20">
-                    <h2 class="md:col-span-1 text-tm-blue-dark font-black text-3xl sm:text-4xl leading-tight mb-4 md:mb-0">
+        <section class="section">
+            <div class="container">
+                <div class="features-header">
+                    <h2 class="features-title">
                         TYPEMASTER KEYBOARD
                     </h2>
-                    <p class="md:col-span-2 text-tm-grey text-base sm:text-lg leading-relaxed md:pl-8">
+                    <p class="features-desc">
                         Give your fingers the typing experience they deserve. Our keyboards are engineered for comfort, speed, and precision.
                     </p>
                 </div>
 
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
-                    <div class="space-y-4 text-center md:text-left">
-                        <div class="bg-tm-orange w-16 h-16 rounded-lg flex items-center justify-center mx-auto md:mx-0 mb-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white">
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25A2.25 2.25 0 0 1 5.25 3h9.75a2.25 2.25 0 0 1 2.25 2.25Z" />
                             </svg>
                         </div>
-                        <h3 class="text-tm-blue-dark font-black text-xl sm:text-2xl">
+                        <h3 class="feature-title">
                             Highly Compatible
                         </h3>
-                        <p class="text-tm-grey text-base leading-relaxed">
+                        <p class="feature-desc">
                             Easy to connect and works seamlessly with Windows, Mac, iOS, and Android devices.
                         </p>
                     </div>
-                    <div class="space-y-4 text-center md:text-left">
-                        <div class="bg-tm-orange w-16 h-16 rounded-lg flex items-center justify-center mx-auto md:mx-0 mb-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.75l.75-.75a2.25 2.25 0 0 1 3.182 0l3.182 3.182a2.25 2.25 0 0 1 0 3.182l-.75.75a2.25 2.25 0 0 1-3.182 0l-3.182-3.182a2.25 2.25 0 0 1 0-3.182ZM15.75 10.75l.75-.75a2.25 2.25 0 0 0-3.182 0l-.75.75m.001 3.183a2.25 2.25 0 0 0 3.182 0l.75-.75M10.5 21l5.25-5.25M4.5 13.5l5.25-5.25" />
                             </svg>
                         </div>
-                        <h3 class="text-tm-blue-dark font-black text-xl sm:text-2xl">
+                        <h3 class="feature-title">
                             Wireless with Bluetooth
                         </h3>
-                        <p class="text-tm-grey text-base leading-relaxed">
+                        <p class="feature-desc">
                             Powerful Bluetooth 5.0 technology ensures a stable and lag-free connection.
                         </p>
                     </div>
-                    <div class="space-y-4 text-center md:text-left">
-                        <div class="bg-tm-orange w-16 h-16 rounded-lg flex items-center justify-center mx-auto md:mx-0 mb-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H21M11.25 4.5v15m0 0A4.502 4.502 0 0 0 6.75 15a4.502 4.502 0 0 0-4.5 4.5m0-15a4.502 4.502 0 0 0 4.5 4.5A4.502 4.502 0 0 0 11.25 4.5M3 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H3Z" />
                             </svg>
                         </div>
-                        <h3 class="text-tm-blue-dark font-black text-xl sm:text-2xl">
+                        <h3 class="feature-title">
                             High Capacity Battery
                         </h3>
-                        <p class="text-tm-grey text-base leading-relaxed">
+                        <p class="feature-desc">
                             Equipped with a long-lasting battery that keeps you typing for days on a single charge.
                         </p>
                     </div>
-                    <div class="space-y-4 text-center md:text-left">
-                        <div class="bg-tm-orange w-16 h-16 rounded-lg flex items-center justify-center mx-auto md:mx-0 mb-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-white">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.354a15.055 15.055 0 0 1-4.5 0m4.5 0v-.375c0-.621-.504-1.125-1.125-1.125h-1.5c-.621 0-1.125.504-1.125 1.125v.375m4.5 0v.375c0 .621.504 1.125 1.125 1.125h1.5c.621 0 1.125-.504 1.125-1.125v-.375m-4.5 0H12M3 12h18M3 12a9 9 0 1 1 18 0A9 9 0 0 1 3 12Zm18 0a9 9 0 1 0-18 0a9 9 0 0 0 18 0Z" />
                             </svg>
                         </div>
-                        <h3 class="text-tm-blue-dark font-black text-xl sm:text-2xl">
+                        <h3 class="feature-title">
                             RGB Backlit Modes
                         </h3>
-                        <p class="text-tm-grey text-base leading-relaxed">
+                        <p class="feature-desc">
                             Choose from various backlight modes and colors to personalize your typing setup.
                         </p>
                     </div>
@@ -196,12 +456,12 @@
         </section>
     </main>
 
-    <footer class="py-10 md:py-12">
-        <div class="container max-w-6xl mx-auto px-6 lg:px-8 text-center md:flex md:justify-between items-center">
-            <p class="text-tm-grey-medium font-medium">
+    <footer>
+        <div class="container footer-container">
+            <p class="footer-text">
                 <span class="font-bold">Typemaster 2024</span> | All Rights Reserved
             </p>
-            </div>
+        </div>
     </footer>
 
 </body>
